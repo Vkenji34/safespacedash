@@ -92,7 +92,14 @@ export default function ReportDashboard() {
                 <td>{report.detail}</td>
                 <td>{report.created_by}</td>
                 <td>{new Date(report.update_at).toLocaleString()}</td>
-                <td>
+                <td
+                  className={
+                    updatedStatuses[report.id] === "Ongoing" ||
+                    (!updatedStatuses[report.id] && report.status === "Ongoing")
+                      ? "status-yellow"
+                      : "status-green"
+                  }
+                >
                   <select
                     value={updatedStatuses[report.id] || report.status}
                     onChange={(e) =>
@@ -119,27 +126,48 @@ export default function ReportDashboard() {
       <style jsx>{`
         .container {
           padding: 20px;
+          background-color: white;
+          color: black;
+          min-height: 100vh;
+        }
+        h2 {
+          text-align: center;
+          margin-bottom: 20px;
         }
         table {
           width: 100%;
           border-collapse: collapse;
           margin-top: 20px;
+          background: white;
         }
         th,
         td {
-          padding: 10px;
+          padding: 12px;
           border: 1px solid #ddd;
           text-align: left;
         }
         th {
           background-color: #f4f4f4;
+          font-weight: bold;
+        }
+        .status-green {
+          color: green;
+          font-weight: bold;
+        }
+        select {
+          padding: 5px;
+          border-radius: 4px;
+          border: 1px solid #ccc;
+          cursor: pointer;
         }
         button {
-          padding: 5px 10px;
+          padding: 6px 12px;
           background-color: #007bff;
           color: white;
           border: none;
+          border-radius: 4px;
           cursor: pointer;
+          transition: 0.3s;
         }
         button:hover {
           background-color: #0056b3;
